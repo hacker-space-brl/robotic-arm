@@ -1,9 +1,7 @@
 
 LATEX=lualatex
 
-TEXTARGETS=$(wildcard ./*/*.tex)
-
-TARGET=$(TEXTARGETS:.tex=.pdf)
+TARGET=robotic-arm.pdf
 
 DOT=$(wildcard figs/*.dot)
 SVG=$(wildcard ./*/figs/*.svg)
@@ -24,15 +22,12 @@ bib: $(TARGET:.tex=.aux)
 	BSTINPUTS=:./style bibtex $(TARGET:.tex=.aux)
 
 %.pdf: %.tex
-	cd `dirname $<`; \
-	TEXINPUTS=:../style $(LATEX) --interaction=$(MODE) -shell-escape `basename $<`; if [ $$? -gt 0 ]; then echo "Error while compiling $<"; touch `basename $<`; fi; \
-	cd -
-	cp $@ `basename $@`
+	TEXINPUTS=:style $(LATEX) --interaction=$(MODE) -shell-escape `basename $<`; if [ $$? -gt 0 ]; then echo "Error while compiling $<"; touch `basename $<`; fi; \
 
 paper: $(SVG:.svg=.pdf) $(DOT:.dot=.pdf) $(TARGET)
 
 touch:
-	touch $(TEXTARGETS)
+	touch $(TARGET:.pdf=.tex)
 
 force: touch paper
 

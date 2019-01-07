@@ -31,16 +31,16 @@
 \newcommand{\vs}{\textit{vs.}\xspace}
 
 
-\author{Séverin Lemaignan, Plymouth University}
+\author{Séverin Lemaignan, University of the West of England}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Set up the header and footer  %%%%%%%%%%%%%%%%%%
 \RequirePackage{fancyhdr}
 \RequirePackage{lastpage} % Required to determine the last page for the footer
 \RequirePackage{extramarks} % Required for headers and footers
 \pagestyle{fancy}
-\lhead{} % Top left header
-\chead{\@title} % Top center head
-\rhead{\firstxmark} % Top right header
+\lhead{\@title} % Top left header
+\chead{} % Top center head
+\rhead{\@subtitle\firstxmark} % Top right header
 \lfoot{\lastxmark} % Bottom left footer
 \cfoot{} % Bottom center footer
 \rfoot{Page\ \thepage\ of\ \protect\pageref{LastPage}} % Bottom right footer
@@ -111,6 +111,8 @@
 \global\let\@theobjectives\@empty
 \global\let\@thechallenges\@empty
 
+\newcommand{\subtitle}[1]{\def\@subtitle{#1}}
+\newcommand{\illustration}[1]{\def\@thefigure{#1}}
 \newcommand{\summary}[1]{\def\@thesummary{#1}}
 \newcommand{\objectives}[1]{\def\@theobjectives{#1}}
 \newcommand{\challenges}[1]{\def\@thechallenges{#1}}
@@ -120,29 +122,37 @@
 \makeatletter
 
 \def\maketitle{%
+  \thispagestyle{empty} % hide the fancyhdr header/footers on the title page nly
   \vskip 60\p@
+  \begin{center}
+  \includegraphics[width=\linewidth]{../style/hacker_space_banner.pdf}
+  \end{center}
   \begin{center}%
     \vskip 3em%
-    {\LARGE \textbf{\@title} \par}%
+    {\Huge \textbf{\@title} \par}%
+    \vskip 1em%
+    {\LARGE \textbf{\@subtitle} \par}%
     \vskip 2.5em%
     %{\large \@date \par}%       % Set date in \large size.
   \end{center}\par
 \vskip 3em%
+\begin{center}
+    \includegraphics[width=\linewidth]{\@thefigure}
+\end{center}
 \noindent\textbf{What is it about?}\par%
 \@thesummary%
 \par\vspace{1em}%
-\noindent\textbf{Aims}\par%
-\@theobjectives%
-\par\vspace{1em}%
-\noindent\textbf{Specific Challenges}\par%
-\@thechallenges%
+%\noindent\textbf{Aims}\par%
+%\@theobjectives%
+%\par\vspace{1em}%
+%\noindent\textbf{Specific Challenges}\par%
+%\@thechallenges%
 \vspace{1em}%
 \par}
 
 \def\makesimpletitle{%
   \vskip 60\p@
   \begin{center}%
-    {\Large \textbf{CS211}}
     \vskip 3em%
     {\LARGE \textbf{\@title} \par}%
     \vskip 4.5em%
